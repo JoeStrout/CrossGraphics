@@ -92,6 +92,15 @@ namespace CrossGraphics.CoreGraphics
 #endif
 		}
 
+		public void Clear (Color c)
+		{
+			// Fill the entire context area with the given color.
+			_c.SaveState();
+			_c.SetFillColorWithColor(c.GetCGColor());
+			_c.FillRect(_c.GetClipBoundingBox());
+			_c.RestoreState();
+		}
+
 		public void FillPolygon (Polygon poly)
 		{
 			var count = poly.Points.Count;
@@ -375,8 +384,9 @@ namespace CrossGraphics.CoreGraphics
 		public IImage ImageFromFile (string filename)
 		{
 #if MONOMAC
-			var img = new NSImage ("Images/" + filename);
-			return new UIKitImage (img.AsCGImage (new RectangleF (PointF.Empty, img.Size), NSGraphicsContext.CurrentContext, new MonoMac.Foundation.NSDictionary ()));
+			NSImage img = new NSImage ("Images/" + filename);
+			RectangleF srcRect = new RectangleF (PointF.Empty, img.Size);
+			return new UIKitImage (img.AsCGImage (ref srcRect, NSGraphicsContext.CurrentContext, new MonoMac.Foundation.NSDictionary ()));
 #else
 			return new UIKitImage (UIImage.FromFile ("Images/" + filename).CGImage);
 #endif
