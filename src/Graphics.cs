@@ -368,6 +368,16 @@ namespace CrossGraphics
 		{
 			return string.Format ("[Color: RedValue={0}, GreenValue={1}, BlueValue={2}, AlphaValue={3}]", RedValue, GreenValue, BlueValue, AlphaValue);
 		}
+
+		// Conversion to/from System.Drawing.Color
+		static public implicit operator Color(System.Drawing.Color c) {
+			return new Color(c.R, c.G, c.B, c.A);
+		}
+		
+		static public implicit operator System.Drawing.Color(Color c) {
+			return System.Drawing.Color.FromArgb(c.Red, c.Green, c.Blue, c.Alpha);
+		}
+
 	}
 
 	public static class Colors
