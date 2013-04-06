@@ -31,7 +31,7 @@ namespace Clock
 			g.SetColor (BackColor);
 			g.FillOval (center.X - r, center.Y - r, 2 * r, 2 * r);
 			g.SetColor (BorderColor);
-			g.DrawOval (center.X - r, center.Y - r, 2 * r, 2 * r, 8);
+			g.DrawOval (center.X - r + 4, center.Y - r + 4, 2 * r - 8, 2 * r - 8, 8);
 
 			g.SetColor (FaceColor);
 			for (var i = 0; i < 12; i++) {
