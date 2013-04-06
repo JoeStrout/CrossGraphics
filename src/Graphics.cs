@@ -348,6 +348,10 @@ namespace CrossGraphics
 			get { return (Red == 0) && (Green == 0) && (Blue == 0); }
 		}
 
+		public bool IsClear {
+			get { return Alpha == 0; }
+		}
+
 		public Color WithAlpha(int aa)
 		{
 			return new Color (Red, Green, Blue, aa);
