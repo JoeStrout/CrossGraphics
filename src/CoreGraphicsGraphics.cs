@@ -26,6 +26,7 @@ using System.Collections.Generic;
 #if MONOMAC
 using MonoMac.CoreGraphics;
 using MonoMac.AppKit;
+using MonoMac.Foundation;
 #else
 using MonoTouch.CoreGraphics;
 using MonoTouch.UIKit;
@@ -385,6 +386,13 @@ namespace CrossGraphics.CoreGraphics
 		{
 #if MONOMAC
 			NSImage img = new NSImage ("Images/" + filename);
+			if (img.Size.IsEmpty) {
+				// I'm not sure under what condition the code above would EVER work...
+				// AFAIK, paths in Cocoa must always be absolute.  So if that fails, as
+				// it always does for me, let's do it the standard way:
+				String fullPath = NSBundle.MainBundle.PathForImageResource(filename);
+				img = new NSImage(fullPath);
+			}
 			RectangleF srcRect = new RectangleF (PointF.Empty, img.Size);
 			return new UIKitImage (img.AsCGImage (ref srcRect, NSGraphicsContext.CurrentContext, new MonoMac.Foundation.NSDictionary ()));
 #else
