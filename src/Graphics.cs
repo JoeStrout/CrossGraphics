@@ -420,6 +420,11 @@ namespace CrossGraphics
 			}
 		}
 
+		public Polygon (List<PointF> points)
+		{
+			this.Points = points;
+		}
+
 		public int Count {
 			get { return Points.Count; }
 		}
@@ -440,6 +445,13 @@ namespace CrossGraphics
 		{
 			Points.Add (new PointF (x, y));
 			Version++;
+		}
+
+		public void Translate(PointF delta)
+		{
+			for (var i = 0; i < Points.Count; i++) {
+				Points[i] = new PointF (Points[i].X + delta.X, Points[i].Y + delta.Y);
+			}
 		}
 	}
 
